@@ -5,6 +5,10 @@ package com.asml.rockfield;
  */
 public class Assigment {
 
+    private enum Direction {
+        LEFT, RIGHT, UP, DOWN;
+    }
+
     /**
      * Traverse the array in a snail pattern and return the traversed path.
      *
@@ -21,59 +25,83 @@ public class Assigment {
      */
     public String traverse(int[][] matrix) {
         validate(matrix);
+        if (matrix.length == 0) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        // Set boundaries
         int top = 0;
         int bottom = matrix.length - 1;
         int left = 0;
         int right = matrix[0].length - 1;
-        StringBuilder result = new StringBuilder();
-        while ((top < bottom) && (left < right)) {
-            moveRight(left, right, result, matrix[top]);
-            top++;
-            moveDown(top, bottom, result, matrix, right);
-            right--;
-            moveLeft(left, right, result, matrix[bottom]);
-            bottom--;
-            moveUp(top, bottom, result, matrix, left);
-            left++;
+        // Set state machine with latest movement
+        Direction lastDirection = Direction.UP;
+        while (boundariesAreValid(top, bottom, left, right)) {
+            // select next movement based on last direction
+            switch (lastDirection) {
+                default:
+                case UP:
+                    lastDirection = moveRight(left, right, result, matrix[top]);
+                    // move top one row down
+                    top++;
+                    break;
+                case RIGHT:
+                    lastDirection = moveDown(top, bottom, result, matrix, right);
+                    // move right boundary one column left
+                    right--;
+                    break;
+                case DOWN:
+                    lastDirection = moveLeft(left, right, result, matrix[bottom]);
+                    // move bottom one row up
+                    bottom--;
+                    break;
+                case LEFT:
+                    lastDirection = moveUp(top, bottom, result, matrix, left);
+                    // move left boundary one column right
+                    left++;
+                    break;
+            }
         }
         removeLastComma(result);
         return result.toString();
     }
 
+    private static boolean boundariesAreValid(int top, int bottom, int left, int right) {
+        return (top <= bottom) && (left <= right);
+    }
+
     private void removeLastComma(StringBuilder result) {
-        result.deleteCharAt(result.length() - 1);
-    }
-
-    private void moveUp(int top, int bottom, StringBuilder result, int[][] matrix, int column) {
-        if (top <= bottom) {
-            for (int row = bottom; row >= top; row--) {
-                result.append(matrix[row][column]).append(',');
-            }
+        if (result.length() > 0 && result.charAt(result.length() - 1) == ',') {
+            result.deleteCharAt(result.length() - 1);
         }
     }
 
-    private void moveLeft(int left, int right, StringBuilder result, int[] row) {
-        if (left <= right) {
-            for (int i = right; i >= left; i--) {
-                result.append(row[i]).append(',');
-            }
+    private Direction moveUp(int top, int bottom, StringBuilder result, int[][] matrix, int column) {
+        for (int row = bottom; row >= top; row--) {
+            result.append(matrix[row][column]).append(',');
         }
+        return Direction.UP;
     }
 
-    private void moveDown(int top, int bottom, StringBuilder result, int[][] matrix, int column) {
-        if (top <= bottom) {
-            for (int row = top; row <= bottom; row++) {
-                result.append(matrix[row][column]).append(',');
-            }
+    private Direction moveLeft(int left, int right, StringBuilder result, int[] row) {
+        for (int i = right; i >= left; i--) {
+            result.append(row[i]).append(',');
         }
+        return Direction.LEFT;
     }
 
-    private static void moveRight(int left, int right, StringBuilder result, int[] row) {
-        if (left <= right) {
-            for (int i = left; i <= right; i++) {
-                result.append(row[i]).append(',');
-            }
+    private Direction moveDown(int top, int bottom, StringBuilder result, int[][] matrix, int column) {
+        for (int row = top; row <= bottom; row++) {
+            result.append(matrix[row][column]).append(',');
         }
+        return Direction.DOWN;
+    }
+
+    private static Direction moveRight(int left, int right, StringBuilder result, int[] row) {
+        for (int i = left; i <= right; i++) {
+            result.append(row[i]).append(',');
+        }
+        return Direction.RIGHT;
     }
 
     private void validate(int[][] matrix) {
