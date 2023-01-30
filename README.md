@@ -2,10 +2,10 @@
 
 Given a 2D array
 
-{{1,2,3,4},
-{5,6,7,8},
-{9,10,11,12},
-{13,14,15,16}}
+- {{1,2,3,4},
+- {5,6,7,8},
+- {9,10,11,12},
+- {13,14,15,16}}
 
 Traverse the array in the pattern below and print the numbers along the path.
 
@@ -46,38 +46,38 @@ Each move could be sent to a thread and collect them at the end in the same orde
 
 For example, given a 2D array
 
-{{1,2,3,4},
-{5,6,7,8},
-{9,10,11,12},
-{13,14,15,16}}
+- {{1,2,3,4},
+- {5,6,7,8},
+- {9,10,11,12},
+- {13,14,15,16}}
 
 read line 1 and create file:
 
-file00000000001: 1,2,3,4,
+- file00000000001: 1,2,3,4,
 
 read line 2 and create files:
 
-file00000000002: 8,
-file00000000004: 5,
-file00000000005: 6,7,
+- file00000000002: 8, 
+- file00000000004: 5,
+- file00000000005: 6,7,
 
 read line 3 and create/modify files:
 
-file00000000002: 8,12
-file00000000004: 5,9 (add 9)
-file00000000006: 10,11
+- file00000000002: 8,12 (add 12)
+- file00000000004: 5,9 (add 9)
+- file00000000006: 10,11
 
 read line 4 and create/modify files:
 
-file00000000002: 8,12,16 (add 16)
-file00000000004: 5,9,13 (add 13)
-file00000000003: 13,14,15
+- file00000000002: 8,12,16 (add 16)
+- file00000000004: 5,9,13 (add 13)
+- file00000000003: 13,14,15
 
 Print:
 
-file00000000001,
-file00000000002,
-file00000000003 backwards,
-file00000000004 backwards,
-file00000000005,
-file00000000006 backwards.
+- file00000000001,
+- file00000000002,
+- file00000000003 backwards,
+- file00000000004 backwards,
+- file00000000005,
+- file00000000006 backwards.
