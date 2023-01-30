@@ -34,7 +34,7 @@ Nice to haves
 
 It's possible to use parallelism to process this task (multithread or distributed) if matrix is large enough and therefore worth it.
 
-Each move could be sent to a thread and collect at the end in the same order as soon as they finish building its String object.
+Each move could be sent to a thread and collect them at the end in the same order as soon as they finish building their String object.
 
 # What to do it Matrix is too large and provided via files
 
