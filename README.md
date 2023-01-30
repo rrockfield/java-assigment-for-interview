@@ -36,7 +36,7 @@ It's possible to use parallelism to process this task (multithread or distribute
 
 Each move could be sent to a thread and collect them at the end in the same order as soon as they finish building their String object.
 
-# What to do it Matrix is too large and provided via files
+# What to do if Matrix is too large and provided via files
 
 - Read matrix line by line once.
 - Build files for each movement. Right and Left movements are easy, because they belong to a single line.
