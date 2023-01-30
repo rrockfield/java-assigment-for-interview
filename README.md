@@ -1,4 +1,4 @@
-# ASML Assigment for interview
+# Assignment for interview
 
 Given a 2D array
 
